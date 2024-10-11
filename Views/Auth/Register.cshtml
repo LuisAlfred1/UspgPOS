@@ -1,0 +1,52 @@
+﻿@model UspgPOS.Models.RegisterViewModel
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <img src="~/images/uspg_pos_logo.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
+    </div>
+    <form asp-action="Register" method="post" class="border p-4 rounded shadow mx-auto" style="max-width: 400px;">
+        <h4 class="text-center mb-4">Registro de Usuario</h4>
+
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label">Nombre Completo</label>
+            <input asp-for="Nombre" class="form-control" placeholder="Escribe tu nombre completo" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Usuario" class="form-label">Nombre de Usuario</label>
+            <input asp-for="Usuario" class="form-control" placeholder="Escribe tu nombre de usuario" />
+            <span asp-validation-for="Usuario" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="Escribe tu email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Contraseña</label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Ingresa tu contraseña" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ConfirmPassword" class="form-label">Confirmar Contraseña</label>
+            <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirma tu contraseña" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Rol" class="form-label">Rol</label>
+            <input asp-for="Rol" class="form-control" placeholder="Escribe el rol del usuario" />
+            <span asp-validation-for="Rol" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Registrar</button>
+
+        <div class="mt-3 text-center">
+            <p>¿Ya tienes cuenta? <a asp-controller="Auth" asp-action="Login">Iniciar Sesión</a></p>
+        </div>
+    </form>
+</div>

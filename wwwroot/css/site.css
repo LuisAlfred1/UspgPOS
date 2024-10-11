@@ -1,0 +1,85 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@keyframes presentacion{
+    0% {
+        opacity: 0; /* Comienza invisible */
+        transform: translateY(20px); /* Desplazamiento hacia abajo */
+    }
+
+    100% {
+        opacity: 1; /* Termina visible */
+        transform: translateY(0); /* Sin desplazamiento */
+    }
+}
+
+.container {
+    animation: presentacion 0.6s ease-out;
+}
+
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background: url(../fondos/degrado.jpg) no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+#formulario{
+    background: #fafafa10;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+}
+
+.form-label{
+    color: white;
+}
+
+#togglePassword {
+    background: #fafafa10;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-color: transparent;
+}
+
+#toggleIcon{
+    color: black;
+}
+
+#toggleIcon:hover{
+    color: white;
+    transition: color 0.2s;
+}
+
+#cargar {
+    background: rgba(255,255,255,.5);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: none;
+    color: black;
+    font-family: 'Berlin Sans FB';
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#cargar:hover {
+    background: rgba(255,255,255,.7);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+}
