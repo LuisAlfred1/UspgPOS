@@ -89,13 +89,13 @@ namespace UspgPOS.Controllers
 					UserName = model.Usuario,
 					Email = model.Email,
 					Nombre = model.Nombre,
-					Rol = model.Rol // Asegúrate de que el modelo contenga esta propiedad
+					Rol = model.Rol.ToString() // Asegúrate de que el modelo contenga esta propiedad
 				};
 
 				var result = await _userManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
-					await _userManager.AddToRoleAsync(user, model.Rol);
+					await _userManager.AddToRoleAsync(user, model.Rol.ToString());
 
 					return RedirectToAction("Login", "Auth");
 				}

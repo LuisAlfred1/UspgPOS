@@ -4,7 +4,7 @@
     <div class="text-center mb-4">
         <img src="~/images/uspg_pos_logo.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
     </div>
-    <form asp-action="Register" method="post" class="border p-4 rounded shadow mx-auto" style="max-width: 400px;">
+    <form asp-action="Register" method="post" class="border p-4 rounded shadow mx-auto" id="registro" style="max-width: 400px;">
         <h4 class="text-center mb-4">Registro de Usuario</h4>
 
         <div class="mb-3">
@@ -39,14 +39,46 @@
 
         <div class="mb-3">
             <label asp-for="Rol" class="form-label">Rol</label>
-            <input asp-for="Rol" class="form-control" placeholder="Escribe el rol del usuario" />
+            <select asp-for="Rol" class="form-control" asp-items="Html.GetEnumSelectList<UspgPOS.Models.UserRole>()">
+                <option value="">Selecciona un rol</option>
+            </select>
             <span asp-validation-for="Rol" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Registrar</button>
+        <button id="boton" type="submit" class="btn btn-primary w-100">Registrar</button>
 
         <div class="mt-3 text-center">
-            <p>¿Ya tienes cuenta? <a asp-controller="Auth" asp-action="Login">Iniciar Sesión</a></p>
+            <p>¿Ya tienes cuenta? <a id="letra" asp-controller="Auth" asp-action="Login">Iniciar Sesión</a></p>
         </div>
     </form>
 </div>
+
+<style>
+    #registro{
+        background:transparent;
+        backdrop-filter: blur(20px)
+    }
+
+    #boton{
+        background: #6b9cb3;
+        color: black;
+        font-weight:500;
+        border:none;
+    }
+    #boton:hover{
+        background: #7cacc2;
+    }
+    #letra{
+        color: rgba(255,255,255,.8);
+        font-weight:600;
+    }
+    #letra:hover{
+        color: white;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

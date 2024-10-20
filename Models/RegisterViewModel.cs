@@ -2,6 +2,12 @@
 
 namespace UspgPOS.Models
 {
+	public enum UserRole
+	{
+		Admin,
+		User
+	}
+
 	public class RegisterViewModel
 	{
 		[Required]
@@ -29,6 +35,6 @@ namespace UspgPOS.Models
 
 		[Required]
 		[Display(Name = "Rol")]
-		public string Rol { get; set; }
+		public UserRole Rol { get; set; }
 	}
 }

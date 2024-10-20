@@ -67,22 +67,6 @@ body {
     transition: color 0.2s;
 }
 
-#cargar {
-    background: rgba(255,255,255,.4);
-    backdrop-filter: blur(50px);
-    -webkit-backdrop-filter: blur(50px);
-    border: none;
-    color: black;
-    font-family: 'Berlin Sans FB';
-    font-size: 16px;
-    font-weight: 600;
-}
-
-#cargar:hover {
-    background: rgba(255,255,255,.6);
-    backdrop-filter: blur(50px);
-    -webkit-backdrop-filter: blur(50px);
-}
 
 #regis{
     color: white;
