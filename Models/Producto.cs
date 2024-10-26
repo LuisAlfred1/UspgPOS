@@ -27,5 +27,8 @@ namespace UspgPOS.Models
         [Required]
         public int Cantidad {  get; set; }
 
+        public Marca? Marca { get; set; }
+        public Clasificacion? Clasificacion { get; set; }
+
     }
 }

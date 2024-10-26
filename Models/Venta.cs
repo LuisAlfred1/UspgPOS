@@ -25,5 +25,6 @@ namespace UspgPOS.Models
 
         public Sucursal? Sucursal { get; set; } // Relacion de uno a uno
 
+
     }
 }
