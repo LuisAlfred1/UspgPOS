@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
+using System.Security.Policy;
 
 namespace UspgPOS.Models
 {
@@ -26,6 +28,11 @@ namespace UspgPOS.Models
         [Column("cantidad")]
         [Required]
         public int Cantidad {  get; set; }
+
+        [Column("img_url")]
+        public string? ImgUrl { get; set; }
+        [Column("thumbnail_url")]
+        public string? ThumbnailUrl { get; set; }
 
         public Marca? Marca { get; set; }
         public Clasificacion? Clasificacion { get; set; }

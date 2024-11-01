@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +16,12 @@ namespace UspgPOS.Controllers
     public class ProductoesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly Cloudinary _cloudinary;
 
-        public ProductoesController(AppDbContext context)
+        public ProductoesController(AppDbContext context, Cloudinary cloudinary)
         {
             _context = context;
+            _cloudinary = cloudinary;
         }
 
         // GET: Productoes
@@ -46,6 +51,7 @@ namespace UspgPOS.Controllers
             return View(producto);
         }
 
+
         // GET: Productoes/Create
         public IActionResult Create()
         {
@@ -59,10 +65,26 @@ namespace UspgPOS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,MarcaId,ClasificacionId,Precio,Cantidad")] Producto producto)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,MarcaId,ClasificacionId,Precio,Cantidad")] Producto producto, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                if(imageFile != null)
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(imageFile.FileName, imageFile.OpenReadStream()),
+                        Transformation = new Transformation().Width(500).Height(500).Crop("fill")
+                    };
+
+                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                    producto.ImgUrl = uploadResult.SecureUrl.ToString();
+
+                    var thumbnailParams = new Transformation().Width(150).Height(150).Crop("thumb");
+
+                    producto.ThumbnailUrl = _cloudinary.Api.UrlImgUp.Transform(thumbnailParams).BuildUrl(uploadResult.PublicId);
+
+                }
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
