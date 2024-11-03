@@ -16,6 +16,17 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
+        <dt class="col-sm-2">Imagen</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ImgUrl))
+            {
+                <img src="@Model.ImgUrl" style="max-height:300px; max-width:300px" />
+            }
+            else
+            {
+                <p>No hay imagenes disponibles</p>
+            }
+        </dd>
     </dl>
 </div>
 <div>

@@ -4,16 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="mt-2">Clasificaciones Registradas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success mt-2">
+        Crear nuevo <i class="bi bi-plus"></i>
+    </a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                Imagen
             </th>
             <th></th>
         </tr>
@@ -25,9 +30,25 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                @if (!string.IsNullOrEmpty(item.ThumbnailUrl))
+                {
+                    <img src="@item.ThumbnailUrl" style="max-height:70px; max-width:70px" />
+                }
+                else
+                {
+                    <p>No hay imagen disponible</p>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-primary">
+                        <i class="bi bi-pencil-fill"></i>
+                </a> |
+                <a asp-action="Details" asp-route-id="@item.id" class="btn btn-dark">
+                        <i class="bi bi-eye"></i>
+                </a> |
+                <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                </a>
             </td>
         </tr>
 }
