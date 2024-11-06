@@ -10,6 +10,10 @@ namespace UspgPOS.Models
         [Column("id")]
         public long Id { get; set; }
 
+        [Column("codigo")]
+        [MaxLength(100)]
+        public string? Codigo { get; set; }
+
         [Column("nombre")]
         [StringLength(255)]
         [Required]
