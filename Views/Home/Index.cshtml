@@ -1,9 +1,127 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<UspgPOS.Models.DetallesEmpleados>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <img src="~/images/uspg_pos_logo.png" />
+@{
+	ViewData["Title"] = "Home Page";
+
+	ViewData["Layout"] = "_LayoutLogged";
+}
+<div class="row">
+	<div class="col-6">
+		<div class="card">
+			<div id="graficoExperiencia"></div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card">
+			<div id="graficoTasaRotacion"></div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card">
+			<div id="graficoSalario"></div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card">
+			<div id="graficoRendimiento"></div>
+		</div>
+	</div>
 </div>
+
+<style>
+	.card {
+		padding: 10px;
+		margin: 20px;
+	}
+</style>
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const departamentos = @Html.Raw(Json.Serialize(Model.Select(detalleEmpleado => detalleEmpleado.Departamento)));
+		const nivelesExperiencia = @Html.Raw(Json.Serialize(Model.Select(detalleEmpleado => detalleEmpleado.NivelExperiencia)));
+		const tasasRotacion = @Html.Raw(Json.Serialize(Model.Select(detalleEmpleado => detalleEmpleado.TasaRotacion)));
+		const salariosPromedio = @Html.Raw(Json.Serialize(Model.Select(detalleEmpleado => detalleEmpleado.SalarioPromedio)));
+		const calificacionesRendimiento = @Html.Raw(Json.Serialize(Model.Select(detalleEmpleado => detalleEmpleado.CalificacionRendimiento)));
+
+		const configuracionGraficoExperiencia = {
+			chart: {
+				type: 'bar'
+			},
+			series: [
+				{
+					name: 'Experiecia (Años)',
+					data: nivelesExperiencia
+				}
+			],
+			xaxis: {
+				categories: departamentos
+			},
+			title: {
+				text: 'Nivel de Experiencia por Departamento'
+			}
+		}
+
+		const graficoExperiencia = new ApexCharts(
+			document.getElementById('graficoExperiencia'),
+			configuracionGraficoExperiencia
+		);
+
+		graficoExperiencia.render();
+
+		const configuracionGraficoTasaRotacion = {
+			chart: {
+				type: 'pie'
+			},
+			series: tasasRotacion,
+			labels: departamentos,
+			title: {
+				text: 'Tasa de Rotacion Anual por Departamento'
+			}
+		};
+		const graficoTasaRotacion = new ApexCharts(document.getElementById("graficoTasaRotacion"), configuracionGraficoTasaRotacion);
+		graficoTasaRotacion.render();
+
+		const configuracionGraficoSalario = {
+			chart: {
+				type: 'line'
+			},
+			series: [
+				{
+					name: 'Salario Promedio',
+					data: salariosPromedio
+				}
+			],
+			xaxis: {
+				categories: departamentos
+			},
+			title: {
+				text: 'Salario Promedio por Departamentoa'
+			}
+		}
+
+		const graficoSalario = new ApexCharts(document.getElementById("graficoSalario"), configuracionGraficoSalario);
+		graficoSalario.render();
+
+		const configuracionGraficoRendimiento = {
+			chart: {
+				type: 'radar'
+			},
+			series: [
+				{
+					name: 'Rendimiento',
+					data: calificacionesRendimiento
+				}
+			],
+			labels: departamentos,
+			title: {
+				text: 'Rendimiento Promedio por Departamento'
+			}
+		}
+
+		const graficoRendimiento = new ApexCharts(document.getElementById("graficoRendimiento"), configuracionGraficoRendimiento);
+		graficoRendimiento.render();
+
+	})
+
+</script>
