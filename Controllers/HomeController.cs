@@ -99,12 +99,46 @@ namespace UspgPOS.Controllers
 				})
 				.ToList();
 
+			var salarioPromedioPorDepartamento = empleados
+				.GroupBy(empleado => empleado.Departamento)
+				.Select(grupo => new
+				{
+					Departamento = grupo.Key,
+					SalarioPromedio = grupo.Average(empleado => empleado.Salario)
+				})
+				.ToList();
+
+			var promedioPorPosicion = empleados
+				.GroupBy (empleado => empleado.Posicion)
+				.Select(grupo => new
+				{
+					Posicion = grupo.Key,
+					PromedioExperiencia = grupo.Average(empleado => empleado.AñosExperiencia)
+				})
+				.ToList();
+
+			var contratadosPorAnio = empleados
+				.GroupBy(e => e.FechaContratacion.Year)
+				.Select(g => new 
+				{ 
+					Año = g.Key, Cantidad = g.Count() 
+				})
+				.OrderBy(d => d.Año)
+				.ToList();
+
 			ViewBag.Departamentos = JsonConvert.SerializeObject(promediosPorDepartamento.Select(grupo => grupo.Departamento).ToList());
 			ViewBag.PromedioDesempeno = JsonConvert.SerializeObject(promediosPorDepartamento.Select(grupo => grupo.PromedioDesempeno).ToList());
 			ViewBag.PromedioSatisfaccion = JsonConvert.SerializeObject(promediosPorDepartamento.Select(grupo => grupo.PromedioSatisfaccion).ToList());
 			ViewBag.PuntajeDesempeno = JsonConvert.SerializeObject(puntajesPorDepartamento.Select(grupo => grupo.PuntajeDesempeno).ToList());
 			ViewBag.PuntajeSatisfaccion = JsonConvert.SerializeObject(puntajesPorDepartamento.Select(grupo => grupo.PuntajeSatisfaccion).ToList());
 			ViewBag.EmpleadosPorDepartamento = JsonConvert.SerializeObject(empleadosPorDepartamento);
+			ViewBag.DepartamentosSal = JsonConvert.SerializeObject(salarioPromedioPorDepartamento.Select(grupo => grupo.Departamento).ToList());
+			ViewBag.salarioPromedioPorDepartamento = JsonConvert.SerializeObject(salarioPromedioPorDepartamento.Select(grupo => grupo.SalarioPromedio).ToList()); //AGREGADO AHORITA
+			ViewBag.Posicion = JsonConvert.SerializeObject(promedioPorPosicion.Select(g => g.Posicion).ToList());
+			ViewBag.PromedioPorPosicion = JsonConvert.SerializeObject(promedioPorPosicion.Select(g => g.PromedioExperiencia).ToList());
+			ViewBag.ContratadosPorAnio = contratadosPorAnio;
+
+
 
 
 			return View();

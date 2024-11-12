@@ -84,21 +84,14 @@
 
 		const configuracionGraficoSalario = {
 			chart: {
-				type: 'line'
+				type: 'pie'
 			},
-			series: [
-				{
-					name: 'Salario Promedio',
-					data: salariosPromedio
-				}
-			],
-			xaxis: {
-				categories: departamentos
-			},
+			series: salariosPromedio,
+			labels: departamentos,
 			title: {
-				text: 'Salario Promedio por Departamentoa'
+				text: 'Salario promedio por departamento'
 			}
-		}
+		};
 
 		const graficoSalario = new ApexCharts(document.getElementById("graficoSalario"), configuracionGraficoSalario);
 		graficoSalario.render();

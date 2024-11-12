@@ -2,23 +2,29 @@
 	ViewData["Title"] = "Dashboard";
 }
 
+<h5>Tarea y ejercicio</h5>
 <div class="row">
 	<div class="col-6">
 		<div class="card">
-			<div id="graficoPromedioDesemepenoSatisfaccion"></div>
+			<div id="treemapEmpleadosPorDepartamento"></div>
 		</div>
 	</div>
 	<div class="col-6">
 		<div class="card">
-			<div id="graficoPuntajeDesemepenoSatisfaccion"></div>
+			<div id="salarioPorDepartamentoChart"></div>
 		</div>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-12">
+    <div class="col-7">
+        <div class="card">
+			<div id="PromedioPosicionChart"></div>
+		</div>
+	</div>
+	<div class="col-5">
 		<div class="card">
-			<div id="treemapEmpleadosPorDepartamento"></div>
+			<div id="CantidadEmpleadoContratadoChart"></div>
 		</div>
 	</div>
 </div>
@@ -31,6 +37,7 @@
 		backdrop-filter: blur(30px)
 	}
 </style>
+
 
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
@@ -131,3 +138,102 @@
 		treemapEmpleadosPorDepartamento.render();
 	});
 </script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Obtener datos desde ViewBag
+		const salarioPorDepa = @Html.Raw(ViewBag.salarioPromedioPorDepartamento);
+		const departamentos = @Html.Raw(ViewBag.DepartamentosSal);
+
+		// Configuración para el gráfico Pie
+		const configuracionPie = {
+			chart: {
+				type: 'pie'
+			},
+			series: salarioPorDepa,
+			labels: departamentos,
+			title: {
+				text: 'Salario promedio por departamento'
+			}
+		};
+
+		// Renderizar el gráfico
+		const salarioPorDepartamentoChart = new ApexCharts(
+			document.getElementById("salarioPorDepartamentoChart"),
+			configuracionPie
+		);
+
+		salarioPorDepartamentoChart.render();
+	});
+</script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Obtener datos desde ViewBag
+		const posiciones = @Html.Raw(ViewBag.Posicion);
+		const promedioPosicion = @Html.Raw(ViewBag.PromedioPorPosicion);
+
+		// Configuración para el gráfico
+		const configuracionBar = {
+			chart: {
+				type: 'bar'
+			},
+			series: [
+				{
+					name: 'Promedios por posicion',
+					data: promedioPosicion
+				}
+			],
+			xaxis: {
+				categories: posiciones
+			},
+			title: {
+				text: 'Promedio de años de experiencia por posición'
+			}
+		};
+
+		// Renderizar el gráfico
+		const chart = new ApexCharts(
+			document.getElementById("PromedioPosicionChart"),
+			configuracionBar
+		);
+
+		chart.render();
+	});
+</script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Obtener datos desde ViewBag
+		const contratadosPorAnio = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ContratadosPorAnio));
+
+		// Configuración para el gráfico
+		const configuracion = {
+			chart: {
+				type: 'line',
+				height: 350
+			},
+			series: [{
+				name: 'Empleados contratados',
+				data: contratadosPorAnio.map(item => item.Cantidad) // Cantidades por año
+			}],
+			xaxis: {
+				categories: contratadosPorAnio.map(item => item.Año) // Años
+			},
+			title: {
+				text: 'Cantidad de Empleados Contratados por Año',
+				align: 'center'
+			}
+		};
+
+		// Renderizar el gráfico
+		const chart = new ApexCharts(
+			document.getElementById("CantidadEmpleadoContratadoChart"),
+			configuracion
+		);
+
+		chart.render();
+	});
+</script>
+
+
